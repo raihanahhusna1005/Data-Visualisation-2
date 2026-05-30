@@ -1,0 +1,200 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A vertical bullet chart showing public transport punctuality starting from 50% with an explicit color legend instead of x-axis text labels.",
+  "width": 340,
+  "height": 280,
+  "padding": {
+      "top": 20,
+      "left": 45
+    }, 
+  "data": {
+    "values": [
+      {
+        "Mode": "Metropolitan Train",
+        "Actual": 92.84,
+        "Target": 92.0,
+        "Poor": 70,
+        "Satisfactory": 90,
+        "Excellent": 100
+      },
+      {
+        "Mode": "Metropolitan Tram",
+        "Actual": 80.43,
+        "Target": 82.0,
+        "Poor": 70,
+        "Satisfactory": 80,
+        "Excellent": 100
+      },
+      {
+        "Mode": "Regional Train",
+        "Actual": 80.71,
+        "Target": 92.0,
+        "Poor": 70,
+        "Satisfactory": 85,
+        "Excellent": 100
+      }
+    ]
+  },
+  "encoding": {
+    "x": {
+      "field": "Mode",
+      "type": "nominal",
+      "axis": null
+    },
+    "y": {
+      "type": "quantitative",
+      "scale": {"domain": [50, 100], "clamp": true},
+      "axis": {
+        "title": "On-Time Punctuality (%)",
+        "titleFont": "Times New Roman",
+        "titleFontSize": 13,
+        "labelFont": "Times New Roman",
+        "labelFontSize": 12
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "bar", "color": "#e6e6e6", "width": 30, "tooltip": true},
+      "encoding": {
+        "y": {"field": "Excellent"}
+      }
+    },
+    {
+      "mark": {"type": "bar", "color": "#cdcdcd", "width": 30},
+      "encoding": {
+        "y": {"field": "Satisfactory"}
+      }
+    },
+    {
+      "mark": {"type": "bar", "color": "#b8b8b8", "width": 30},
+      "encoding": {
+        "y": {"field": "Poor"}
+      }
+    },
+    {
+      "mark": {"type": "bar", "width": 12, "tooltip": true},
+      "encoding": {
+        "y": {"field": "Actual"},
+        "color": {
+          "field": "Mode",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Metropolitan Train", "Metropolitan Tram", "Regional Train"],
+            "range": ["#1b5e20", "#800020", "#9c27b0"]
+          },
+          "legend": {
+            "orient": "bottom",
+            "legendX": 75,
+            "legendY": 345,
+            "title": "Mode of Transport",
+            "titleFont": "Times New Roman",
+            "titleFontSize": 13,
+            "titleFontWeight": "bold",
+            "titleAnchor": "middle",
+            "labelFont": "Times New Roman",
+            "labelFontSize": 12,
+            "symbolSize": 100,
+            "labelPadding": 8
+          }
+        }
+      }
+    },
+    {
+      "mark": {"type": "tick", "color": "#bc1d23", "size": 30, "thickness": 3, "tooltip": true},
+      "encoding": {
+        "y": {"field": "Target"}
+      }
+    },
+    {
+      "name": "Annotation Arrow Open (M)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": ">",
+        "fontSize": 20,
+        "color": "#010834",
+        "angle" : 270
+      },
+      "encoding": {
+        "x": {"value": 200},
+        "y": {"value": 105}
+      }
+    },
+    {
+      "name": "Annotation Middle (M)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": "-",
+        "fontSize": 18,
+        "color": "#010834",
+        "angle" : 90
+      },
+      "encoding": {
+        "x": {"value": 199},
+        "y": {"value": 110}
+      }
+    },
+     {
+      "name": "Annotation Arrow Close (M)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": "<",
+        "fontSize": 20,
+        "color": "#010834",
+        "angle" : 270
+      },
+      "encoding": {
+        "x": {"value": 200},
+        "y": {"value": 116}
+      }
+     },
+     {
+      "name": "Annotation Arrow Open (R)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": ">",
+        "fontSize": 20,
+        "color": "#010834",
+        "angle" : 270
+      },
+      "encoding": {
+        "x": {"value": 310},
+        "y": {"value": 48}
+      }
+    },
+    {
+      "name": "Annotation Middle (R)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": "----------",
+        "fontSize": 18,
+        "color": "#010834",
+        "angle" : 90
+      },
+      "encoding": {
+        "x": {"value": 309},
+        "y": {"value": 80}
+      }
+    },
+     {
+      "name": "Annotation Arrow Close (R)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": "<",
+        "fontSize": 20,
+        "color": "#010834",
+        "angle" : 270
+      },
+      "encoding": {
+        "x": {"value": 310},
+        "y": {"value": 112}
+      }
+     }
+  ]
+}

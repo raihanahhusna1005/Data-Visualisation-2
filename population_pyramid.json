@@ -1,0 +1,120 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 450,
+  "height": 350,
+  "padding": {
+    "top": 20,
+    "left": 45
+  },
+  "data": {
+    "values": [
+      {"agegroup": "0->4", "sex": "Female", "People": 157},
+      {"agegroup": "0->4", "sex": "Male", "People": 165},
+      {"agegroup": "5->9", "sex": "Female", "People": 188},
+      {"agegroup": "5->9", "sex": "Male", "People": 213},
+      {"agegroup": "10->14", "sex": "Female", "People": 206},
+      {"agegroup": "10->14", "sex": "Male", "People": 205},
+      {"agegroup": "15->19", "sex": "Female", "People": 181},
+      {"agegroup": "15->19", "sex": "Male", "People": 186},
+      {"agegroup": "20->24", "sex": "Female", "People": 165},
+      {"agegroup": "20->24", "sex": "Male", "People": 174},
+      {"agegroup": "25->29", "sex": "Female", "People": 215},
+      {"agegroup": "25->29", "sex": "Male", "People": 210},
+      {"agegroup": "30->34", "sex": "Female", "People": 236},
+      {"agegroup": "30->34", "sex": "Male", "People": 210},
+      {"agegroup": "35->39", "sex": "Female", "People": 248},
+      {"agegroup": "35->39", "sex": "Male", "People": 244},
+      {"agegroup": "40->44", "sex": "Female", "People": 251},
+      {"agegroup": "40->44", "sex": "Male", "People": 248},
+      {"agegroup": "45->49", "sex": "Female", "People": 213},
+      {"agegroup": "45->49", "sex": "Male", "People": 212},
+      {"agegroup": "50->54", "sex": "Female", "People": 214},
+      {"agegroup": "50->54", "sex": "Male", "People": 202},
+      {"agegroup": "55->59", "sex": "Female", "People": 207},
+      {"agegroup": "55->59", "sex": "Male", "People": 199},
+      {"agegroup": "60->64", "sex": "Female", "People": 182},
+      {"agegroup": "60->64", "sex": "Male", "People": 158},
+      {"agegroup": "65->69", "sex": "Female", "People": 179},
+      {"agegroup": "65->69", "sex": "Male", "People": 144},
+      {"agegroup": "70->74", "sex": "Female", "People": 165},
+      {"agegroup": "70->74", "sex": "Male", "People": 145},
+      {"agegroup": "75->79", "sex": "Female", "People": 126},
+      {"agegroup": "75->79", "sex": "Male", "People": 122},
+      {"agegroup": "80->84", "sex": "Female", "People": 71},
+      {"agegroup": "80->84", "sex": "Male", "People": 55},
+      {"agegroup": "85->89", "sex": "Female", "People": 40},
+      {"agegroup": "85->89", "sex": "Male", "People": 43},
+      {"agegroup": "90->94", "sex": "Female", "People": 14},
+      {"agegroup": "90->94", "sex": "Male", "People": 9},
+      {"agegroup": "95->99", "sex": "Female", "People": 2}
+    ]
+  },
+  "params": [
+    {
+      "name": "hover",
+      "select": {"type": "point", "on": "mouseover", "fields": ["agegroup"]}
+    }
+  ],
+  "transform": [
+    {
+      "calculate": "datum.sex === 'Male' ? -datum.People : datum.People",
+      "as": "SignedPeople"
+    }
+  ],
+  "mark": {"type": "bar", "height": {"band": 0.85}, "tooltip": true},
+  "encoding": {
+    "y": {
+      "field": "agegroup",
+      "type": "nominal",
+      "sort": ["95->99", "90->94", "85->89", "80->84", "75->79", "70->74", "65->69", "60->64", "55->59", "50->54", "45->49", "40->44", "35->39", "30->34", "25->29", "20->24", "15->19", "10->14", "5->9", "0->4"],
+      "axis": {
+        "title": "Age Range",
+        "titleFont": "Times New Roman",
+        "titleFontSize": 13,
+        "labelFont": "Times New Roman",
+        "labelFontSize": 13
+      }
+    },
+    "x": {
+      "field": "SignedPeople",
+      "type": "quantitative",
+      "axis": {
+        "labelExpr": "abs(datum.value)",
+        "title": "Number of Passengers",
+        "labelFont": "Times New Roman",
+        "labelFontSize": 13,
+        "titleFont": "Times New Roman",
+        "titleFontSize": 13
+      }
+    },
+    "color": {
+      "field": "sex",
+      "type": "nominal",
+      "scale": {"domain": ["Male", "Female"], "range": ["#1a3856", "#800020"]},
+      "legend": {
+        "title": "Gender",
+        "titleFont": "Times New Roman",
+        "titleFontSize": 13,
+        "orient": "none",
+        "legendX": 165,
+        "legendY": 410,
+        "direction": "horizontal",
+        "titleOrient": "top",
+        "titleAnchor": "middle",
+        "labelFont": "Times New Roman",
+        "labelFontSize": 13,
+        "symbolSize": 100,
+        "labelPadding": 5
+      }
+    },
+    "opacity": {
+      "condition": {"param": "hover", "value": 1},
+      "value": 0.2
+    },
+    "tooltip": [
+      {"field": "agegroup", "title": "Age Range"},
+      {"field": "sex", "title": "Gender"},
+      {"field": "People", "title": "Number of People"}
+    ]
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 380,
+  "height": 280,
+  "padding": {
+    "top": 20,
+    "left": 45
+  },
+  "data": {
+    "url": "travel_costs.csv",
+    "format": {"type": "csv"}
+  },
+  "layer": [
+    {
+      "transform": [
+        {"fold": ["Driving Cost", "Public Transport Cost"], "as": ["Transport Type", "Cost"]}
+      ],
+      "mark": {"type": "bar", "tooltip": true},
+      "encoding": {
+        "x": {
+          "field": "Route",
+          "type": "nominal",
+          "axis": {"title": null, "labelAngle": 0, "labelFont": "Times New Roman", "labelFontSize": 12}
+        },
+        "y": {
+          "field": "Cost",
+          "type": "quantitative",
+          "axis": {
+            "title": "Weekly Cost ($AUD)",
+            "titleFont": "Times New Roman",
+            "titleFontSize": 13,
+            "titleFontWeight": "bold",
+            "labelFont": "Times New Roman",
+            "labelFontSize": 12
+          }
+        },
+        "xOffset": {"field": "Transport Type"},
+        "color": {
+          "field": "Transport Type",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Driving Cost", "Public Transport Cost"],
+            "range": ["#ff9800", "#800020"]
+          },
+          "legend": {
+            "title": "Mode Type",
+            "titleFont": "Times New Roman",
+            "titleFontSize": 13,
+            "titleFontWeight": "bold",
+            "labelFont": "Times New Roman",
+            "labelFontSize": 12,
+            "symbolSize": 100,
+            "orient": "none",
+            "legendX": 75,
+            "legendY": 315,
+            "direction": "horizontal",
+            "titleOrient": "top",
+            "titleAnchor": "middle",
+            "labelPadding": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "Annotation Arrow Open (C)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": ">",
+        "fontSize": 30,
+        "color": "#010834",
+        "angle" : 270
+      },
+      "encoding": {
+        "x": {"value": 85},
+        "y": {"value": 150}
+      }
+    },
+    {
+      "name": "Annotation Middle (C)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": "-----",
+        "fontSize": 28,
+        "color": "#010834",
+        "angle" : 90
+      },
+      "encoding": {
+        "x": {"value": 83},
+        "y": {"value": 179}
+      }
+    },
+     {
+      "name": "Annotation Arrow Close (C)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": "<",
+        "fontSize": 30,
+        "color": "#010834",
+        "angle" : 270
+      },
+      "encoding": {
+        "x": {"value": 85},
+        "y": {"value": 207}
+      }
+     },
+    {
+      "name": "Annotation Arrow Open (P)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": ">",
+        "fontSize": 30,
+        "color": "#010834",
+        "angle" : 270
+      },
+      "encoding": {
+        "x": {"value": 205},
+        "y": {"value": 18}
+      }
+    },
+    {
+      "name": "Annotation Middle (P)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": "-------------------",
+        "fontSize": 28,
+        "color": "#010834",
+        "angle" : 90
+      },
+      "encoding": {
+        "x": {"value": 203},
+        "y": {"value": 112}
+      }
+    },
+     {
+      "name": "Annotation Arrow Close (P)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": "<",
+        "fontSize": 30,
+        "color": "#010834",
+        "angle" : 270
+      },
+      "encoding": {
+        "x": {"value": 205},
+        "y": {"value": 207}
+      }
+     },
+    {
+      "name": "Annotation Arrow Open (W)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": ">",
+        "fontSize": 28,
+        "color": "#010834",
+        "angle" : 270
+      },
+      "encoding": {
+        "x": {"value": 321},
+        "y": {"value": 185}
+      }
+    },
+    {
+      "name": "Annotation Middle (w)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": "--",
+        "fontSize": 28,
+        "color": "#010834",
+        "angle" : 90
+      },
+      "encoding": {
+        "x": {"value": 319},
+        "y": {"value": 196}
+      }
+    },
+     {
+      "name": "Annotation Arrow Close (w)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": "<",
+        "fontSize": 28,
+        "color": "#010834",
+        "angle" : 270
+      },
+      "encoding": {
+        "x": {"value": 321},
+        "y": {"value": 207}
+      }
+     }
+  ]
+}

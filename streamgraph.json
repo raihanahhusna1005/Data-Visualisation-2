@@ -1,0 +1,105 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 650,
+  "height": 350,
+  "data": {
+    "url": "aggregated_transport_usage.csv"
+  },
+  "layer": [
+    {
+      "transform": [
+        {
+          "filter": "datum.Mode == 'Tram' || datum.Mode == 'Bus' || datum.Mode == 'Train'"
+        },
+        {
+          "calculate": "datum.Mode == 'Tram' ? 0 : (datum.Mode == 'Bus' ? 1 : 2)",
+          "as": "sort_order"
+        }
+      ],
+      "mark": {
+        "type": "area",
+        "interpolate": "monotone",
+        "opacity": 0.85
+      },
+      "encoding": {
+        "x": {
+          "field": "Date",
+          "type": "temporal",
+          "title": "Year",
+          "axis": {
+            "format": "%Y",
+            "tickCount": "year",
+            "grid": true,
+            "gridDash": [2, 2],
+            "titleFont": "Times New Roman",
+            "titleFontSize": 14
+          }
+        },
+        "y": {
+          "aggregate": "sum",
+          "field": "Users",
+          "type": "quantitative",
+          "stack": "center",
+          "sort": {"field": "sort_order", "op": "min"},
+          "title": "Monthly Passengers",
+          "axis": {
+            "labels": false,
+            "ticks": false,
+            "titleFont": "Times New Roman",
+            "titleFontSize": 14
+          }
+        },
+        "color": {
+          "field": "Mode",
+          "type": "nominal",
+          "sort": ["Tram", "Bus", "Train"],
+          "legend": {
+            "title": "Mode of Transport",
+            "titleFont": "Times New Roman",
+            "titleFontSize": 14,
+            "labelFont": "Times New Roman",
+            "labelFontSize": 14,
+            "symbolSize": 100,
+            "labelPadding": 10,
+            "orient": "none",
+            "legendX": 680,
+            "legendY": 140
+          },
+          "scale": {
+            "domain": ["Tram", "Bus", "Train"],
+            "range": ["#800020", "#ff9800", "#1b5e20"]
+          }
+        },
+        "tooltip": [
+          {"field": "Date", "type": "temporal", "title": "Month", "format": "%B %Y"},
+          {"field": "Mode", "type": "nominal"},
+          {"field": "Users", "type": "quantitative", "title": "Monthly Passengers", "format": ","}
+        ]
+      }
+    },
+    {
+      "name": "Arrow 1",
+      "data": {"values": [{}]},
+      "mark": {"type": "text", "text": ">>", "fontSize": 22, "color": "#419aff", "angle": 90},
+      "encoding": {"x": {"value": 186}, "y": {"value": 125}}
+    },
+    {
+      "name": "Arrow 2",
+      "data": {"values": [{}]},
+      "mark": {"type": "text", "text": "<<", "fontSize": 22, "color": "#419aff", "angle": 90},
+      "encoding": {"x": {"value": 186}, "y": {"value": 245}}
+    },
+    {
+      "name": "Arrow 3",
+      "data": {"values": [{}]},
+      "mark": {"type": "text", "text": "<<", "fontSize": 22, "color": "#0f0260", "angle": 90},
+      "encoding": {"x": {"value": 325}, "y": {"value": 95}}
+    },
+    {
+      "name": "Arrow 4",
+      "data": {"values": [{}]},
+      "mark": {"type": "text", "text": ">>", "fontSize": 22, "color": "#0f0260", "angle": 90},
+      "encoding": {"x": {"value": 325}, "y": {"value": 270}}
+    }
+  ]
+}

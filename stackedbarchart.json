@@ -1,0 +1,99 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 400,
+  "padding": {
+      "left": 100
+  }, 
+  "data": {
+    "url": "modeoftransportperyear.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "transform": [
+    {
+      "filter": "datum.Year != null && datum.Year != '' && datum.Year != 2026"
+    },
+    {
+      "fold": [
+        "Metropolitan train",
+        "Metropolitan tram",
+        "Metropolitan bus",
+        "Regional train",
+        "Regional coach",
+        "Regional bus"
+      ],
+      "as": [
+        "Transport Mode",
+        "RawPatronage"
+      ]
+    },
+    {
+      "calculate": "datum.RawPatronage != null ? toNumber(join(split(datum.RawPatronage, ','), '')) : 0",
+      "as": "Patronage"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "aggregate": "sum",
+      "field": "Patronage",
+      "type": "quantitative",
+      "stack": "normalize",
+      "title": "Patronage Distribution (%)",
+      "axis": {
+        "labelFont": "Times New Roman",
+        "labelFontSize": 13,
+        "titleFont": "Times New Roman",
+        "titleFontSize": 13
+      }
+    },
+    "y": {
+      "field": "Year",
+      "type": "nominal",
+      "axis": {
+        "title": null,
+        "labelAngle": 0,
+        "labelFont": "Times New Roman",
+        "labelFontSize": 13
+      }
+    },
+    "color": {
+      "field": "Transport Mode",
+      "type": "nominal",
+      "legend": {
+        "orient": "none",
+        "legendX": 635,
+        "legendY": 140,
+        "labelFont": "Times New Roman",
+        "labelFontSize": 13,
+        "titleFont": "Times New Roman",
+        "titleFontSize": 13,
+        "title": "Transport Mode",
+        "titleAnchor": "middle"
+      },
+      "scale": {
+        "domain": [
+          "Metropolitan train",
+          "Metropolitan tram",
+          "Metropolitan bus",
+          "Regional train",
+          "Regional coach",
+          "Regional bus"
+        ],
+        "range": [
+          "#1b5e20",
+          "#800020",
+          "#ff9800",
+          "#9c27b0",
+          "#e91e63",
+          "#ff5722"
+        ]
+      }
+    }
+  },
+  "mark": {
+    "type": "bar",
+    "tooltip": true
+  }
+}

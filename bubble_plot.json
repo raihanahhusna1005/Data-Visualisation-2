@@ -1,0 +1,97 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 400,
+  "padding": {
+    "top": 25,
+    "left": 45,
+    "bottom": 20
+  },
+  "config": {
+    "axis": {
+      "labelFont": "Times New Roman",
+      "labelFontSize": 15,
+      "titleFont": "Times New Roman",
+      "titleFontSize": 15,
+      "titleAnchor": "middle"
+    },
+    "legend": {
+      "labelFont": "Times New Roman",
+      "labelFontSize": 15,
+      "titleFont": "Times New Roman",
+      "titleFontSize": 15
+    }
+  },
+  "data": {
+    "url": "person.csv"
+  },
+  "params": [
+    {
+      "name": "gender_select",
+      "select": {"type": "point", "fields": ["sex"]},
+      "bind": {
+        "input": "radio",
+        "options": [null, "Male", "Female"],
+        "labels": ["All", "Male", "Female"],
+        "name": "Select Gender: "
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": {"param": "gender_select"}
+    },
+    {
+      "aggregate": [{"op": "count", "as": "num_people"}],
+      "groupby": ["mainact", "agegroup", "sex"]
+    }
+  ],
+  "mark": {
+    "type": "circle",
+    "opacity": 0.5,
+    "stroke": "black",
+    "strokeWidth": 1
+  },
+  "encoding": {
+    "y": {
+      "field": "mainact",
+      "type": "nominal",
+      "axis": {"title": null}
+    },
+    "x": {
+      "field": "agegroup",
+      "type": "nominal",
+      "sort": [
+        "0->4", "5->9", "10->14", "15->19", "20->24", "25->29", 
+        "30->34", "35->39", "40->44", "45->49", "50->54", "55->59", 
+        "60->64", "65->69", "70->74", "75->79", "80->84", "85->89", "90->94"
+      ],
+      "axis": {"title": "Age Range", "labelAngle": -45}
+    },
+    "size": {
+      "field": "num_people",
+      "type": "quantitative",
+      "title": "Number of People",
+      "scale": {"rangeMax": 2000}
+    },
+    "color": {
+      "field": "sex",
+      "type": "nominal",
+      "legend": {
+        "title": "Gender",
+        "titleFontWeight": "bold",
+        "titleAnchor": "middle"
+      },
+      "scale": {
+        "domain": ["Male", "Female"],
+        "range": ["#1a3856", "#800020"]
+      }
+    },
+    "tooltip": [
+      {"field": "mainact", "title": "Activity"},
+      {"field": "agegroup", "title": "Age Range"},
+      {"field": "sex", "title": "Gender"},
+      {"field": "num_people", "title": "Count"}
+    ]
+  }
+}

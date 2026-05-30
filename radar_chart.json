@@ -1,0 +1,74 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 370,
+  "height": 350,
+  "padding": {
+    "top": 25,
+    "left": 45,
+    "bottom": 20
+  },
+  "config": {
+    "legend": {
+      "orient": "none",
+        "legendX": 375,
+        "legendY": 90,
+      "labelFont": "Times New Roman",
+      "labelFontSize": 13,
+      "titleFont": "Times New Roman",
+      "titleFontSize": 13,
+      "titleFontWeight": "bold",
+      "titleAnchor": "middle"
+    }
+  },
+  "data": {
+    "values": [
+      {"Station": "Baxter", "Metric": "Pre-AM Peak", "Passengers": 50},
+      {"Station": "Baxter", "Metric": "AM Peak", "Passengers": 52},
+      {"Station": "Baxter", "Metric": "Interpeak", "Passengers": 45},
+      {"Station": "Baxter", "Metric": "PM Peak", "Passengers": 55},
+      {"Station": "Baxter", "Metric": "PM Late", "Passengers": 49}
+    ]
+  },
+  "params": [
+    {
+      "name": "highlight",
+      "select": {"type": "point", "on": "mouseover", "fields": ["Metric"]}
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "arc",
+        "innerRadius": 40,
+        "stroke": "#fff",
+        "strokeWidth": 2,
+        "cursor": "pointer"
+      },
+      "encoding": {
+        "theta": {"field": "Passengers", "type": "quantitative", "stack": true},
+        "radius": {
+          "field": "Passengers",
+          "scale": {"type": "sqrt", "zero": true, "rangeMin": 40}
+        },
+        "color": {
+          "field": "Metric",
+          "type": "nominal",
+          "legend": {"title": "Period"},
+          "scale": {
+            "range": ["#9c27b0", "#800020", "#ff9800", "#1b5e20", "#e91e63"]
+          }
+        },
+        "opacity": {
+          "condition": {"param": "highlight", "value": 1},
+          "value": 0.3
+        }
+      }
+    }
+  ],
+  "encoding": {
+    "tooltip": [
+      {"field": "Metric", "title": "Period"},
+      {"field": "Passengers", "title": "Patronage"}
+    ]
+  }
+}

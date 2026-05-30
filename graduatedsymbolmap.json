@@ -1,0 +1,138 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 700,
+  "height": 500,
+  "projection": {
+    "type": "mercator",
+    "center": [144.9631, -37.8136],
+    "scale": 100000
+  },
+  "params": [
+    {
+      "name": "Select_Year",
+      "value": 2025,
+      "bind": {
+        "input": "range",
+        "min": 2023,
+        "max": 2025,
+        "step": 1,
+        "name": "Select Year: "
+      }
+    }
+  ],
+  "layer": [
+    {
+      "name": "Map Background Fill (Black Water)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "rect",
+        "fill": "#000000"
+      }
+    },
+    {
+      "name": "Forced Map Border Frame",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "rect",
+        "fill": "transparent",
+        "stroke": "#000000",
+        "strokeWidth": 2,
+        "tooltip": null
+      }
+    },
+    {
+      "data": {
+        "url": "victoria-regions.geojson",
+        "format": {"type": "json", "property": "features"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#2c3e50",
+        "stroke": "#34495e",
+        "strokeWidth": 0.5
+      }
+    },
+    {
+      "data": {
+        "url": "mostusedtrainstation_all.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum.Fin_year == (Select_Year == 2025 ? 'FY24-25' : (Select_Year == 2024 ? 'FY23-24' : 'FY22-23'))"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "opacity": 0.8,
+        "stroke": "#5e2a84",
+        "strokeWidth": 0.5
+      },
+      "encoding": {
+        "longitude": {"field": "Stop_long", "type": "quantitative"},
+        "latitude": {"field": "Stop_lat", "type": "quantitative"},
+        "size": {
+          "field": "Pax_annual",
+          "type": "quantitative",
+          "title": "Annual Pax",
+          "scale": {"domain": [0, 20000000], "range": [20, 1000]}
+        },
+        "color": {
+          "field": "Pax_annual",
+          "type": "quantitative",
+          "legend": {
+            "title": "Annual Pax",
+            "titleFont": "Times New Roman",
+            "titleFontSize": 14,
+            "labelFont": "Times New Roman",
+            "labelFontSize": 14,
+            "titleAnchor": "middle",
+            "symbolSize": 100,
+            "labelPadding": 10,
+            "orient": "none",
+            "legendX": 750,
+            "legendY": 140
+          },
+          "scale": {
+            "domain": [0, 20000000],
+            "range": ["#fdbb2d", "#5e2a84"]
+          }
+        },
+        "tooltip": [
+          {"field": "Stop_name", "type": "nominal", "title": "Station Name"},
+          {"field": "Pax_annual", "type": "quantitative", "title": "Annual Pax", "format": ","}
+        ]
+      }
+    },
+    {
+      "name": "Center Annotation Arrow",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": "<<",
+        "fontSize": 30,
+        "color": "#ffffff",
+        "angle": 118
+      },
+      "encoding": {
+        "x": {"value": 330},
+        "y": {"value": 300}
+      }
+    },
+      {
+      "name": "Annotation Text",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": "Melbourne CBD",
+        "fontSize": 18,
+        "font": "Times New Roman",
+        "color": "#ffffff",
+        "angle": 0
+      },
+      "encoding": {
+        "x": {"value": 285},
+        "y": {"value": 334}
+      }
+    }
+  ]
+}

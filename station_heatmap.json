@@ -1,0 +1,103 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 700,
+  "height": 150,
+  "padding": {
+    "top": 15,
+    "left": 55
+  },
+  "data": {
+    "url": "mostusedtrainstation_all.csv"
+  },
+  "params": [
+    {
+      "name": "YearSelect",
+      "value": "FY24-25",
+      "bind": {
+        "input": "radio",
+        "options": ["FY22-23", "FY23-24", "FY24-25"],
+        "labels": ["2023", "2024", "2025"],
+        "name": "Select Year: "
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.Fin_year == YearSelect && !(YearSelect == 'FY22-23' && datum.Stop_name == 'Jolimont')"
+    },
+    {
+      "window": [{"op": "rank", "as": "rank"}],
+      "sort": [{"field": "Pax_annual", "order": "descending"}]
+    },
+    {
+      "filter": "datum.rank <= 10"
+    },
+    {
+      "fold": [
+        "Pax_weekday",
+        "Pax_Saturday",
+        "Pax_Sunday"
+      ],
+      "as": ["Category", "Passengers"]
+    },
+    {
+      "calculate": "datum.Category == 'Pax_weekday' ? 'Weekday' : datum.Category == 'Pax_Saturday' ? 'Saturday' : 'Sunday'",
+      "as": "Cleaned Category"
+    }
+  ],
+  "mark": {
+    "type": "rect",
+    "tooltip": true
+  },
+  "encoding": {
+    "x": {
+      "field": "Stop_name",
+      "type": "nominal",
+      "sort": {
+        "op": "sum",
+        "field": "Passengers",
+        "order": "ascending"
+      },
+      "axis": {
+        "title": null,
+        "labelAngle": -45,
+        "labelFont": "Times New Roman",
+        "labelFontSize": 14
+      }
+    },
+    "y": {
+      "field": "Cleaned Category",
+      "type": "nominal",
+      "sort": ["Weekday", "Saturday", "Sunday"],
+      "axis": {
+        "title": null,
+        "labelFont": "Times New Roman",
+        "labelFontSize": 14
+      }
+    },
+    "color": {
+      "field": "Passengers",
+      "type": "quantitative",
+      "title": "Avg Passengers",
+      "legend": {
+        "titleFont": "Times New Roman",
+        "titleFontSize": 14,
+        "titleFontWeight": "bold",
+        "labelFont": "Times New Roman",
+        "labelFontSize": 14,
+        "labelFontWeight": "normal"
+      },
+      "scale": {
+        "type": "sqrt",
+        "range": ["#0b3c5d", "#ffffff", "#cc5500"],
+        "domainMid": {"expr": "YearSelect == 'FY22-23' ? 2400 : 2500"},
+        "clamp": true
+      }
+    }
+  },
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    }
+  }
+}

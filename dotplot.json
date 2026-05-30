@@ -1,0 +1,146 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 500,
+  "projection": {
+    "type": "mercator",
+    "center": [144.9631, -37.8136],
+    "scale": 18000
+  },
+  "params": [
+    {
+      "name": "Select_Mode",
+      "value": null,
+      "bind": {
+        "input": "select",
+        "options": [null, "METRO TRAIN", "METRO TRAM", "METRO BUS", "REGIONAL TRAIN", "REGIONAL COACH", "REGIONAL BUS", "INTERSTATE TRAIN", "SKYBUS"],
+        "labels": ["Show All", "Metro Train", "Metro Tram", "Metro Bus", "Regional Train", "Regional Coach", "Regional Bus", "Interstate Train", "Skybus"],
+        "name": "Select Mode: "
+      }
+    }
+  ],
+  "layer": [
+    {
+      "name": "Map Background Fill (Black Water)",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "rect",
+        "fill": "#000000"
+      }
+    },
+    {
+      "name": "Detailed Victoria Suburb Map Background",
+      "data": {
+        "url": "victoria-regions.geojson",
+        "format": {"type": "json", "property": "features"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#2c3e50",
+        "stroke": "#34495e",
+        "strokeWidth": 0.5
+      }
+    },
+    {
+      "name": "Forced Map Border Frame",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "rect",
+        "fill": "transparent",
+        "stroke": "#000000",
+        "strokeWidth": 2,
+        "tooltip": null
+      }
+    },
+    {
+      "name": "Public Transport Dots",
+      "data": {
+        "url": "publictransportstops_updated.txt",
+        "format": {"type": "json", "property": "features"}
+      },
+      "transform": [
+        {
+          "filter": "Select_Mode === null || datum.properties.MODE === Select_Mode"
+        }
+      ],
+      "mark": {"type": "circle", "size": 30, "opacity": 0.85},
+      "encoding": {
+        "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
+        "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"},
+        "color": {
+          "field": "properties.MODE",
+          "type": "nominal",
+          "legend": {
+            "title": "Mode of Transport",
+            "titleFont": "Times New Roman",
+            "titleFontSize": 14,
+            "titleAnchor": "middle",
+            "titleColor": "#000000",
+            "labelFont": "Times New Roman",
+            "labelFontSize": 14,
+            "labelColor": "#000000",
+            "orient": "none",
+            "legendX": 670,
+            "legendY": 140
+          },
+          "scale": {
+            "domain": ["METRO TRAIN", "METRO TRAM", "METRO BUS", "REGIONAL TRAIN", "REGIONAL COACH", "REGIONAL BUS", "INTERSTATE TRAIN", "SKYBUS"],
+            "range": ["#1b5e20", "#800020", "#ff9800", "#9c27b0", "#e91e63", "#ff5722", "#ffd700", "#d6eaf8"]
+          }
+        },
+        "tooltip": [
+          {"field": "properties.STOP_ID", "type": "nominal", "title": "Stop ID"},
+          {"field": "properties.STOP_NAME", "type": "nominal", "title": "Stop Name"},
+          {"field": "properties.MODE", "type": "nominal", "title": "Mode"}
+        ]
+      }
+    },
+    {
+      "name": "Legend Subtitle",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": "Click on dropdown to filter",
+        "font": "Times New Roman",
+        "fontSize": 15,
+        "align": "left",
+        "color": "#000000"
+      },
+      "encoding": {
+        "x": {"value": 665},
+        "y": {"value": 115}
+      }
+    },
+    {
+      "name": "Center Annotation Arrow",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": "<<",
+        "fontSize": 30,
+        "color": "#ffffff",
+        "angle": 118
+      },
+      "encoding": {
+        "x": {"value": 280},
+        "y": {"value": 300}
+      }
+    },
+  {
+      "name": "Annotation Text",
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "text": "Melbourne CBD",
+        "fontSize": 16,
+        "font": "Times New Roman",
+        "color": "#ffffff",
+        "angle": 0
+      },
+      "encoding": {
+        "x": {"value": 265},
+        "y": {"value": 330}
+      }
+    }
+  ]
+}

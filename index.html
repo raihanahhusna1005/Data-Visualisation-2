@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Transport in Victoria</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Rampart+One&family=Prociono&display=swap" rel="stylesheet">    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Rampart+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Rampart+One&family=Noto+Sans+Gurmukhi:wght@400;700&display=swap" rel="stylesheet">    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <img src="ptvlogo.png" alt="Left Icon" class="header-img">
+        
+        <div class="header-text">
+            <h1>Tracks, Transits & Traffic:</h1>
+            <h2>The Story of Public Transport in Victoria</h2>
+        </div>
+        
+        <img src="transports.png" alt="Right Icon" class="header-img">
+    </header>
+
+    <!-- main box (container) -->
+    <div class="container">
+        <h2>Public Transport Stops Across Victoria</h2>
+        
+        <div id="dotplot"></div>
+
+        <div class="map-box-text">
+            <p>
+                This map illustrates a <strong>distinct, high-density cluster centered on metropolitan <br> Melbourne, </strong> (shown by white arrow)
+                where public transport stops are highly concentrated and <br>close in proximity to serve area of dense population.<br>
+                <strong><br>Outside the central</strong>, data points follow <strong>linear patterns</strong>, representing regional tracks and roads. <br>
+                In the <strong>broader regional and rural areas of Victoria</strong>, the data distribution is <strong>highly sparse.</strong> <br>
+            </p>
+        </div>
+
+        <h2 class="section-title">Passenger Usage Trends in Victoria Over Years<br></h2>
+
+        <div id="streamgraph"></div>
+
+        <div class="map-box-text">
+            <p>
+                From 2018 to 2026, <strong>train (metropolitan and regional)</strong> remains the most famous transport mode.<br>
+                <br>In 2020, due to lockdowns, <strong>entire stream violently pinches inward, </strong> (shown by light blue arrows)
+                reflecting a <strong> decrease in monthly passengers</strong> for all transport modes.
+                <strong>From 2022 onward, the overall stream widens gradually,</strong> (shown by dark blue arrows) proving a massive return of passengers post-lockdown. 
+            </p>
+        </div>
+
+        <h2 class="section-title">Most Used Train Stops in Victoria</h2>
+
+        <div id="graduated-map"></div>
+
+        <div class="map-box-text">
+            <p>
+                This map demonstrates <strong>a consistent pattern from 2023 to 2025</strong>, where a high-density monocentric network design
+                remains prominent, proven by <strong>a massive cluster of high-volume transit hubs concentrated within the Melbourne CBD </strong>(shown by white arrows)<br>
+            </p>
+        </div>
+
+        <h2 class="section-title">Annual Distribution of Patronage by Mode</h2>
+
+        <div id="stackedbar"></div>
+
+        <div class="map-box-text">
+            <p>
+            <br><strong> Metropolitan train and tram</strong> services consistently dominate ridership volume followed by metropolitan bus, while <strong>regional transit options</strong> maintain a relatively stable, smaller share throughout the years.
+            </p>
+        </div>
+
+        <h2 class="section-title">Victoria's Top 15 Stations: Weekdays vs. Weekends Usage</h2>
+
+        <div id="station-heatmap"></div>
+
+        <div class="map-box-text">
+            <p>
+                <br>This chart demonstrates that <strong> weekday usage consistently exceeds weekend</strong> demand across the top 15 stations.<br>
+                This disparity is most pronounced at high-traffic hubs, whereas usage is balanced at lower-volume stations.
+            </p>
+        </div>
+
+            <h2 class="section-title">Patronage Trends by Metropolitan Transport Mode</h2>
+            
+            <div id="trellischart" style="display: flex; justify-content: center; min-height: 350px;"></div>
+
+            <div class="map-box-text">
+                <p>
+                    As discussed earlier, <strong>metropolitan train has the highest patronage,</strong> followed by metropolitan tram and bus.<br>
+                    All modes follow <strong>similar pattern (shown by arrows)</strong>, reflecting high patronage through 2019, a sharp decline in 2020 and steady recovery from 2021.
+                </p>
+        </div>
+    </div> <!-- end of first main box -->
+
+     <!-- start two-box layout -->
+    <div class="two-column-layout" style="max-width: 1200px; margin: 30px auto; padding: 0 20px; box-sizing: border-box;">
+        
+        <!-- left box -->
+        <div class="column-item container" style="margin: 0;">
+            <h2 class="section-title">Why People Prefer Public Transport Over Driving?</h2>
+
+            <div id="groupedbarchart"></div>
+
+            <div class="map-box-text">
+                <p>
+                    <br>Public transport's <strong>cost-efficiency is a powerful incentive </strong>for commuters. As this chart demonstrates, the <strong>cost gap (represented by arrows) are particularly significant for longer-distance travel.</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- right box -->
+        <div class="column-item container" style="margin: 0;">
+            <h2 class="section-title">Why People Prefer Driving Over Public Transport?</h2>
+            
+            <div id="bulletchart"></div> 
+
+            <div class="map-box-text">
+                <p>
+                    <br>While public transport is cost-efficient, it <strong>struggles to compete with driving's reliability.</strong>
+                   <br><strong>Reliability deficit,</strong> represented by arrows <strong>reduce commuter's trust,</strong> especially for those prioritizing punctuality and.
+                </p>
+            </div>
+        </div>
+        
+    </div> <!-- end of the side-by-side row -->
+
+    <!-- start of second main box -->
+    <div class="container" style="margin-top: 30px; margin-bottom: 60px;">   
+            <h2 class="section-title" style="margin-top: 0;">Age Range and Gender of Passengers</h2>
+
+        <div class="pyramid-container" style="display: flex; align-items: center; justify-content: center; gap: 5px;">
+            
+            <img src="male_logo.png" alt="Male" style="width: 90px; height: auto; margin-right: 8px;">
+            
+            <div id="population-pyramid" style="display: flex; justify-content: center;"></div>
+            
+            <img src="female_logo.png" alt="Female" style="width: 100px; height: auto; margin-left: 5px;">
+            
+        </div>
+
+        <div class="map-box-text">
+            <p>
+                Hover over groups in chart to highlight and see number of passengers<br>  
+                <br>This chart indicates that public transport is heavily utilized by the <strong>prime workforce age (35-44 years old).</strong>
+                Interestingly, there is a relatively <strong>symmetrical distribution between males and females,</strong> suggesting that public transport in Victoria serves a gender-balanced commuter base.<br><br>
+            </p> 
+            
+        <h2 class="section-title">Activities by Age Range and Gender</h2>
+        
+        <div id="bubbleplot" style="display: flex; justify-content: center; min-height: 350px;"></div>
+
+        <div class="map-box-text">
+            <p>
+                <br>This chart reveals <strong>Full-time Work is the primary activity,</strong> with a massive concentration between <strong>30-50 age range.</strong>
+                Followed by <strong>younger cohorts</strong> concentrate in <strong>Schooling (under 20), Retired</strong> activity dominates from <strong>65 onwards.</strong>
+    </div>
+    </div>
+    </div>   
+    <!-- end of second main box --> 
+
+    <!-- start of second side-by-side box --> 
+    <div class="two-column-layout" style="max-width: 1200px; margin: 30px auto; padding: 0 20px; box-sizing: border-box;">
+        
+        <!-- left box -->
+        <div class="column-item container" style="margin: 0;">
+            <h2 class="section-title" style="margin-top: 0;">Patronage Profile Comparison: Flinders Street Station</h2>
+
+            <div id="radar-chart-flinders" style="display: flex; justify-content: center; min-height: 350px;"></div>
+
+            <div class="map-box-text">
+                <p>
+                    This chart exhibits <strong>highly skewed</strong> patronage.<strong>The PM Peak dominates the total volume,</strong> representing majority of activity. This suggests this is a major hub <strong>primarily used for commuters returning home in the evening.</strong>
+                </p>  
+            </div>
+        </div>
+
+        <!-- right box -->
+        <div class="column-item container" style="margin: 0;">
+            <h2 class="section-title">Patronage Profile Comparison: <br>Baxter Station</h2>
+            
+            <div id="radar-chart" style="display: flex; justify-content: center; min-height: 350px;"></div>
+
+            <div class="map-box-text">
+                <p>
+                   In contrast, this chart displays <strong>even distribution across all time periods.</strong> No single period dominates, indicating a consistent, steady level of usage throughout the day rather than sharp peaks.
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- end of second side-by-side box --> 
+
+    <!-- vegaEmbed calls--> 
+    <script>
+        vegaEmbed('#dotplot', 'dotplot.json').then(result => {
+            console.log("Dotplot chart successfully rendered!");
+        }).catch(console.error);
+
+        vegaEmbed('#graduated-map', 'graduatedsymbolmap.json').then(result => {
+            console.log("Graduated symbol map successfully rendered!");
+        }).catch(console.error);
+
+        vegaEmbed('#streamgraph', 'streamgraph.json').then(result => {
+            console.log("Streamgraph successfully rendered!");
+        }).catch(console.error);
+
+        vegaEmbed('#stackedbar', 'stackedbarchart.json').then(result => {
+            console.log("Stacked bar chart successfully rendered!");
+        }).catch(console.error);
+
+        vegaEmbed('#station-heatmap', 'station_heatmap.json').then(result => {
+            console.log("Station heatmap successfully rendered!");
+        }).catch(console.error);
+
+        vegaEmbed('#groupedbarchart', 'grouped_bar.json').then(result => {
+            console.log("Grouped bar chart successfully rendered!");
+        }).catch(console.error);
+
+        vegaEmbed('#bulletchart', 'bullet_chart.json').then(result => {
+            console.log("Bullet chart successfully rendered!");
+        }).catch(console.error);
+        
+        vegaEmbed('#population-pyramid', 'population_pyramid.json').then(result => {
+            console.log("Population pyramid chart successfully rendered!");
+        }).catch(console.error);
+
+        vegaEmbed('#radar-chart', 'radar_chart.json').then(result => {
+            console.log("Radar chart successfully rendered!");
+        }).catch(console.error);
+
+        vegaEmbed('#radar-chart-flinders', 'radar_chart_flinders.json').then(result => {
+            console.log("Radar chart 2successfully rendered!");
+        }).catch(console.error);
+
+        vegaEmbed('#bubbleplot', 'bubble_plot.json').then(result => {
+            console.log("Bubble plot successfully rendered!");
+        }).catch(console.error);
+
+        vegaEmbed('#trellischart', 'trellis_plot.json').then(result => {
+            console.log("Trellis plot successfully rendered!");
+        }).catch(console.error);
+    </script>
+
+    <!-- back to top button --> 
+    <button id="back-to-top" onclick="scrollToTop()" style="display: none;">Back Top</button>
+
+    <script>
+        // function to scroll to top
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // logic to hide/show the button on scroll
+        window.onscroll = function() {
+            var btn = document.getElementById("back-to-top");
+            // Show button after scrolling down 300 pixels
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                btn.style.display = "block";
+            } else {
+                btn.style.display = "none";
+            }
+        };
+    </script>
+
+</body>
+
+<!-- footer section --> 
+<footer class="main-footer" style="background-color: #1a3856; color: #ffffff; padding: 30px; text-align: center; margin-top: 40px; width: 100%; box-sizing: border-box;">
+    <h3 style="font-family: 'Prociono', serif; font-size: 1.2rem; color: #ffffff; margin: 0;">By: Raihanah Husna Binti Shahidan  [ 31 May 2026 ]</h3>
+    
+    <div class="data-sources" style="margin-top: 5px; padding-top: 0; font-family: 'Prociono', serif; font-size: 0.95rem; padding-left: 20px; padding-right: 20px; word-wrap: break-word;">
+        <p style="margin: 0;"><br>Data Sources:</p>
+        <div style="line-height: 2;">
+            <a href="https://discover.data.vic.gov.au/dataset/public-transport-lines-and-stops" style="color: #ffffff;">https://discover.data.vic.gov.au/dataset/public-transport-lines-and-stops</a>, 
+            <a href="https://opendata.transport.vic.gov.au/dataset/annual-metropolitan-train-station-patronage-station-entries" style="color: #ffffff;">https://opendata.transport.vic.gov.au/dataset/annual-metropolitan-train-station-patronage-station-entries</a> <br> 
+            <a href="https://opendata.transport.vic.gov.au/dataset/monthly-public-transport-patronage-by-mode" style="color: #ffffff;">https://opendata.transport.vic.gov.au/dataset/monthly-public-transport-patronage-by-mode</a>, 
+            <a href="https://opendata.transport.vic.gov.au/dataset/victorian-integrated-survey-of-travel-and-activity-vista" style="color: #ffffff;">https://opendata.transport.vic.gov.au/dataset/victorian-integrated-survey-of-travel-and-activity-vista</a> <br>
+            <a href="https://www.vic.gov.au/public-transport-daily-operational-performance-reports" style="color: #ffffff;">https://www.vic.gov.au/public-transport-daily-operational-performance-reports</a>
+        </div>
+    </div>
+</footer>
+
+</html>
